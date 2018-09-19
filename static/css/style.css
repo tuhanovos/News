@@ -1,0 +1,67 @@
+body{
+    font-family: 'Roboto',sans-serif;
+}
+
+.header{
+    height: 70px;
+    background: #0c5460 fixed;
+    margin-bottom: 70px;
+    position: fixed;
+    z-index: 9999999;
+    width: 100%;
+}
+
+.header-text{
+    font-family: Lobster, serif;
+}
+
+.top-menu{
+    position: relative;
+    border-bottom: 1px solid rgba(204,204,204,1);
+    margin-top: 8px;
+}
+
+.top-menu nav{
+    height: 40px;
+}
+
+.left-block, .right-block{
+    background-color: #5e5e5e;
+    width: inherit;
+    min-height: 400px;
+    height: 100vh;
+}
+
+.main{
+    position: absolute;
+    top: 130px;
+}
+
+footer{
+    background-color: #0c5460;
+    width: 100%;
+    margin-top: 20px;
+}
+
+footer p{
+    padding-top: 12px;
+    color: whitesmoke;
+}
+
+.form{
+    margin: 0.7rem 3rem;
+}
+
+.block-news{
+    margin-bottom: 30px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.h1, h1{
+    font-size: 1.5rem;
+}
+
+.h6, h6 {
+    font-size: .9rem;
+}

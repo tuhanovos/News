@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load staticfiles %}
+{% block content %}
+<div class="container">
+{% for new in news %}
+    <!--Вывод всех новостей-->
+    <div class="row">
+    <div class="col-lg-12">
+    <div class="card mb-2">
+    <div class="card-body">
+
+    <div class="media">
+
+        {% if new.news_image %}
+            <div class="card w-25 mr-3 text-white bg-primary">
+            <img src="/media/{{ new.news_image }}" class="mr-3 card-img-top">
+            <div class="card-body pt-3 pb-3 pl-1 pr-0 text-lg-center">
+                <h6 class="card-text mr-2 ml-0"><span class="p-2">{{ new.news_date }}</span></h6>
+            </div>
+            </div>
+        {% else %}
+            <div class="card w-25 mr-3 text-white bg-primary">
+            <img src="{% static 'image/134703850_w640_h640_no_foto.png' %}" class="mr-3 card-img-top">
+            <div class="card-body pt-3 pb-3 pl-1 pr-0 text-lg-center">
+                <h6 class="card-text mr-2 ml-0"><span class="p-2">{{ new.news_date }}</span></h6>
+            </div>
+            </div>
+        {% endif %}
+
+        <div class="media-body">
+            <h1 class="mt-0 w-100"><a href="{% url 'blog:post' new.id %}" >{{ new.title }}</a></h1>
+            {% autoescape off %}{{ new.description|striptags|truncatewords:30 }}{% endautoescape %}
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

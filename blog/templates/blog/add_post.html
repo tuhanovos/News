@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+    <form method="post" class="form" enctype="multipart/form-data">
+    {{ form.media }}
+    {% csrf_token %}
+    {% bootstrap_form form %}
+        <button type="submit" class="btn btn-primary">Записать</button>
+</form>
+{% endblock content %}

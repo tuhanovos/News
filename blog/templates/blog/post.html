@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+    <div class="col-lg-12 card p-3">
+        <h1 class="text-primary">{{ post.title }}</h1>
+        <h5 class="icon-ban-circle"><span class="badge badge-secondary p-2">{{ post.news_date }}</span></h5>
+
+        <div class="card-body">{% autoescape off %}{{ post.description|safe }}{% endautoescape %}</div>
+    </div>
+    </div>
+</div>
+{% endblock content %}

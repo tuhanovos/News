@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="eq@localhost" uuid="f7ab7fc3-5402-44eb-ab0c-7c46f32d01b0">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/news_database</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="Django default" uuid="a0dfa929-38db-47c2-b661-9ebd83526254">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/News/settings.py</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://127.0.0.1:5432/news_database</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="newsdb@localhost" uuid="f612ebf6-2d82-4a4a-8c6a-621ad9542708">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/newsdb</jdbc-url>
+    </data-source>
+  </component>
+</project>

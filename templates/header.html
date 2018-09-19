@@ -1,0 +1,84 @@
+{% load menubuilder %}
+<div class="header">
+<div class="container-fluid">
+    <div class="row ml-2">
+        <div class="col-4 col-lg-4">
+            <div class="row p-0">
+            <div class="col-5 col-lg-2 p-0">
+                <a href="/">
+                <img src="/static/image/male-avatar-profile-picture-vector.jpg" alt=""
+                     class="rounded-circle bg-light w-75 mt-1 d-none d-lg-inline">
+                </a>
+                <a href="/">
+                <img src="/static/image/male-avatar-profile-picture-vector.jpg" alt=""
+                     class="rounded-circle bg-light img-fluid mt-2 p-0 d-inline d-lg-none">
+                </a>
+            </div>
+                <div class="col-7 col-lg-10 p-0">
+                    <ul class="nav flex-column">
+                        <li class="nav-link pb-0 text-success">
+                            <span class="d-none d-lg-inline">Владимир 32( Нижний Новгород )</span>
+                        </li>
+                        <li class="nav-item d-none d-lg-inline">
+                            <a class="nav-link text-light pt-0" href="#">Моя страница</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 d-none d-lg-block">
+
+        </div>
+        <div class="col-lg-2 col-8">
+        <div class="row">
+        <div class="col-12">
+            <nav class="navbar navbar-expand">
+                <ul class="navbar-nav">
+                {% menu loginmenu %}
+                {% for item in menuitems %}
+
+                    <li class="nav-item">
+
+                        <a href="{{ item.url }}" title="{{ item.title|escape }}"  class='nav-link text-light'>
+                            {{ item.title }}
+                        </a>
+                    </li>
+
+                {% endfor %}
+            </ul>
+            </nav>
+        </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    <div class="top-menu row">
+    <div class="col">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+            {% menu headernavigation %}
+
+            <a class="navbar-brand header-text" href="/">Местный</a>
+
+         <div class="collapse navbar-collapse" id="navbar1">
+            <ul class="navbar-nav mr-auto">
+
+                {% for item in menuitems %}
+
+                    <li class="nav-item">
+
+                        <a href="{{ item.url }}" title="{{ item.title|escape }}"  class='nav-link text-uppercase'>
+                            {{ item.title }}
+                        </a>
+                    </li>
+
+                {% endfor %}
+            </ul>
+         </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1" aria-controls="navbar1" aria-expanded="true" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+    </div>
+    </div>
+</div>
