@@ -1,8 +1,9 @@
-
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.views.generic import FormView
 
 from blog.models import CategoriesNews
 
@@ -34,6 +35,18 @@ class RegisterFormView(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'address', 'password1', 'password2',)
+
+
+"""Форма авторизации"""
+
+
+class LoginFormView(forms.Form):
+    email = forms.EmailField(label='Введите email')
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': ''}), label='Введите пароль')
+
+    def __init(self):
+        super(forms.Form, self).__init__(self)
+        del self.fields['username']
 
 
 """

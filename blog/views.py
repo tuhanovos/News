@@ -1,14 +1,13 @@
-
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, logout
 from django.core.files.uploadhandler import FileUploadHandler
 from django.db.models import F
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.utils.datastructures import MultiValueDictKeyError
 
+from News.EmailAuthBackend import EmailAuthBackend
 from blog.models import UserCreateNews, CategoriesNews
-from .forms import RegisterFormView, ProfileForm
+from .forms import RegisterFormView, ProfileForm, LoginFormView
 
 # Create your views here.
 
@@ -37,7 +36,7 @@ def register_user(request):
             return redirect('blog/add_post')
     else:
         form = RegisterFormView()
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'register_form.html', {'form': form})
 
 
 """
@@ -50,16 +49,27 @@ def login_user(request):
         return redirect('/')
     else:
         if request.method == 'POST':
-            form = AuthenticationForm(data=request.POST)
+            form = LoginFormView(data=request.POST)
             if form.is_valid():
-                username = form.cleaned_data.get('username')
+                email = form.cleaned_data.get('email')
                 my_pass = form.cleaned_data.get('password')
-                user = authenticate(username=username, password=my_pass)
-                login(request, user)
-                return redirect('/blog')
+                user = EmailAuthBackend.authenticate(email=email, password=my_pass)
+                if user is None:
+                    return HttpResponse('<h1>Пользователь с таким именем существует</h1>')
+                else:
+                    login(request, user)
+                    return redirect('index')
         else:
-            form = AuthenticationForm()
-        return render(request, 'register_form.html', {'form': form})
+            form = LoginFormView()
+        return render(request, 'login.html', {'form': form})
+
+
+"""Выход из профиля"""
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('index')
 
 
 """
@@ -105,4 +115,3 @@ def view_one_post(request, news_id):
     post = UserCreateNews.objects.get(pk=news_id)
     UserCreateNews.objects.filter(id=news_id).update(score=F('score') + 1)
     return render(request, 'blog/post.html', {'post': post})
-

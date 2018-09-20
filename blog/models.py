@@ -2,6 +2,7 @@
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
 from django.db import models
+
 """ 
 En: This is the model of the user profile in which he adds the news
 Rus: Это модель профиля пользователя в которой он добавляет новость

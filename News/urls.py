@@ -18,14 +18,15 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 
 from django.conf import settings
-from blog.views import index, register_user, login_user
+from blog.views import index, register_user, login_user, logout_user
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('', index, name='index'),
-                  path('blog/', include(('blog.urls', 'blog'), namespace='blog')),
                   path('registration/', register_user, name='registration'),
                   path('login/', login_user, name='login'),
+                  path('logout/', logout_user, name='logout'),
+                  path('blog/', include(('blog.urls', 'blog'), namespace='blog')),
                   path('ckeditor/', include('ckeditor_uploader.urls')),
                   re_path(r'^api-auth/', include('rest_framework.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
