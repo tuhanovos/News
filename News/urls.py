@@ -20,6 +20,8 @@ from django.urls import path, include, re_path
 from django.conf import settings
 from blog.views import index, register_user, login_user, logout_user
 
+admin.autodiscover()
+
 urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('', index, name='index'),
@@ -29,6 +31,7 @@ urlpatterns = [
                   path('blog/', include(('blog.urls', 'blog'), namespace='blog')),
                   path('ckeditor/', include('ckeditor_uploader.urls')),
                   re_path(r'^api-auth/', include('rest_framework.urls')),
+                  re_path(r'^comments/', include('django_comments.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

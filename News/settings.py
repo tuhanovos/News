@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'blog.apps.BlogConfig',
     'bootstrap4',
     'menu',
@@ -42,7 +43,12 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'dbbackup',
     'rest_framework',
-]
+    'crispy_forms',
+    ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,8 +62,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'News.urls'
 
+
 AUTHENTICATION_BACKENDS = [
-    'News.EmailAuthBackend.EmailAuthBackend'
+    'News.EmailAuthBackend.EmailAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 TEMPLATE_LOADERS = (
@@ -102,6 +110,13 @@ DATABASES = {
 # DBBACKUP_STORAGE = 'dbbackup.storage.filesystem_storage'
 DBBACKUP_STORAGE_OPTIONS = {'location': os.path.join(BASE_DIR, 'backup-db')}
 
+DBBACKUP_CONNECTORS = {
+    'default': {
+        'USER': 'tuhanovos',
+        'PASSWORD': '0308198O',
+        'HOST': 'localhost'
+    }
+}
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -134,7 +149,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-RU'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 

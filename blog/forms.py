@@ -4,8 +4,9 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.views.generic import FormView
+from django_comments.forms import CommentDetailsForm
 
-from blog.models import CategoriesNews
+from blog.models import CategoriesArticles
 
 """
 Форма регистрации пользователя на сайте
@@ -55,9 +56,10 @@ class LoginFormView(forms.Form):
 
 
 class ProfileForm(forms.Form):
-    CHOICES = CategoriesNews.objects.all().values_list('id', 'categories_news')
+    CHOICES = CategoriesArticles.objects.all().values_list('id', 'categories_article')
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': ''}), max_length=150,
                             label='Заголовок новости')
-    categories_news = forms.ChoiceField(choices=CHOICES, label='Выберите категорию')
+    categories_article = forms.ChoiceField(choices=CHOICES, label='Выберите категорию')
     text = forms.CharField(widget=CKEditorUploadingWidget(config_name='default'), label='Текст новости')
     image = forms.ImageField(label='Загрузить изображение', required=False)
+

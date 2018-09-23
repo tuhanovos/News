@@ -7,7 +7,7 @@ from blog.views import user_add_news, view_one_post
 
 urlpatterns = [
     path('add_record', user_add_news, name='add_record'),
-    re_path(r'^post/(?P<news_id>\d+)/', view_one_post, name='post'),
+    re_path(r'^post/(?P<article_id>\d+)/', view_one_post, name='post'),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 

@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.utils.datastructures import MultiValueDictKeyError
 
 from News.EmailAuthBackend import EmailAuthBackend
-from blog.models import UserCreateNews, CategoriesNews
+from blog.models import Article, CategoriesArticles, Comments
 from .forms import RegisterFormView, ProfileForm, LoginFormView
 
 # Create your views here.
@@ -18,7 +18,7 @@ from .forms import RegisterFormView, ProfileForm, LoginFormView
 
 def index(request):
     if request.method == 'GET':
-        news = UserCreateNews.objects.all().order_by('-news_date')
+        news = Article.objects.all().order_by('-news_date')
         return render(request, 'index.html', {'news': news})
     return HttpResponse(status=405)
 
@@ -84,13 +84,13 @@ def user_add_news(request):
             if form.is_valid():
                 title = form.cleaned_data['title']  # Заголовок поста
                 text = form.cleaned_data['text']  # Текст поста
-                category = form.cleaned_data['categories_news']  # Имя категории
-                category_id = CategoriesNews.objects.get(id=category)  # Выбор id категории
+                category = form.cleaned_data['categories_article']  # Имя категории
+                category_id = CategoriesArticles.objects.get(id=category)  # Выбор id категории
                 image = form.cleaned_data['image']  # Изображение поста для вывода в списке записей блога
-                news = UserCreateNews(title=title,
-                                      description=text,
-                                      categories_news=category_id,
-                                      news_image=image)  # Передача получегых из формы значений модели.
+                news = Article(title=title,
+                               description=text,
+                               categories_article=category_id,
+                               news_image=image)  # Передача получегых из формы значений модели.
                 # Для записи в базу данных
                 try:
                     FileUploadHandler(request.FILES['image'])  # Загрузка изображение на сервер
@@ -111,7 +111,10 @@ def user_add_news(request):
 """
 
 
-def view_one_post(request, news_id):
-    post = UserCreateNews.objects.get(pk=news_id)
-    UserCreateNews.objects.filter(id=news_id).update(score=F('score') + 1)
-    return render(request, 'blog/post.html', {'post': post})
+def view_one_post(request, article_id):
+    comments = Comments.objects.filter(comment_article=article_id)
+    for comment in comments:
+        print(comment.comment_text)
+    post = Article.objects.get(pk=article_id)
+    Article.objects.filter(id=article_id).update(score=F('score') + 1)
+    return render(request, 'blog/post.html', {'post': post, 'comments': comments})
