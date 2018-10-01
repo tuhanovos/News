@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.twitter',
     'allauth.socialaccount.providers.odnoklassniki',
     # 'allauth.socialaccount.providers.facebook',
-    ]
+]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -120,7 +120,6 @@ DATABASES = {
     }
 }
 
-
 # Настройки резервной копии базы данных
 
 # DBBACKUP_STORAGE = 'dbbackup.storage.filesystem_storage'
@@ -176,7 +175,6 @@ USE_TZ = True
 FILE_UPLOAD_HANDLERS = ["django.core.files.uploadhandler.MemoryFileUploadHandler",
                         "django.core.files.uploadhandler.TemporaryFileUploadHandler"]
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
@@ -203,6 +201,25 @@ STATICFILES_DIRS = [
 ]
 
 CKEDITOR_CONFIGS = {
+    'comments': {
+        'skin': 'moono',
+        'toolbar': [['Bold', 'Italic', 'Smiley', 'Link', 'Unlink', 'SpecialChar', 'Image', '-', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Undo', 'Redo']],
+        'height': 200,
+        # 'width': '100%',
+        'removePlugins': 'stylesheetparser',
+        'resize_enabled': False,
+        'extraPlugins': ','.join(
+
+            [
+                'autoembed',
+                'codesnippet',
+                'autogrow',
+                'widget',
+                'lineutils',
+
+            ]),
+    },
+
     'default': {
 
         'skin': 'moono',
@@ -330,5 +347,3 @@ CKEDITOR_CONFIGS = {
     }
 
 }
-
-

@@ -3,12 +3,12 @@ from allauth.account.views import LoginView
 from django.contrib.auth import login, logout, authenticate
 from django.core.files.uploadhandler import FileUploadHandler
 from django.db.models import F
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.utils.datastructures import MultiValueDictKeyError
 
 from blog.models import Article, CategoriesArticles, Comments
-from .forms import RegisterFormView, ProfileForm, LoginFormView
+from .forms import RegisterFormView, ProfileForm, LoginFormView, CommentForm
 
 # Create your views here.
 
@@ -49,6 +49,7 @@ class MyLoginForm(LoginView):
     template_name = 'login.html'
 
 
+"""
 def login_user(request):
     if request.user.is_authenticated:
         return redirect('/')
@@ -67,6 +68,7 @@ def login_user(request):
             form = LoginFormView()
         return render(request, 'login.html', {'login_form': form})
 
+"""
 
 """Выход из профиля"""
 
@@ -121,4 +123,24 @@ def view_one_post(request, article_id):
         print(comment.comment_text)
     post = Article.objects.get(pk=article_id)
     Article.objects.filter(id=article_id).update(score=F('score') + 1)
-    return render(request, 'blog/post.html', {'post': post, 'comments': comments})
+    form_comments = CommentForm
+    context = {
+        'post': post,
+        'comments': comments,
+        'form_comments': form_comments,
+    }
+
+    return render(request, 'blog/post.html', context)
+
+
+"""Добавление комментария к статье"""
+
+
+def add_comment(request, article_id):
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.comments_article = Article.objects.get(id=article_id)
+            form.save()
+        return HttpResponseRedirect(f'/blog/post/{article_id}/')

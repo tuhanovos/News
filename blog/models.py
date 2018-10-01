@@ -48,5 +48,5 @@ class Comments(models.Model):
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
 
-    comment_text = models.TextField()
+    comment_text = models.TextField(verbose_name='Добавить комментарий')
     comment_article = models.ForeignKey(Article, on_delete=models.CASCADE)

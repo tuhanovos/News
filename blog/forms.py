@@ -1,12 +1,14 @@
+from ckeditor.widgets import CKEditorWidget
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django import forms
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 from django.views.generic import FormView
 from django_comments.forms import CommentDetailsForm
 
-from blog.models import CategoriesArticles
+from blog.models import CategoriesArticles, Comments
 
 """
 Форма регистрации пользователя на сайте
@@ -63,3 +65,13 @@ class ProfileForm(forms.Form):
     text = forms.CharField(widget=CKEditorUploadingWidget(config_name='default'), label='Текст новости')
     image = forms.ImageField(label='Загрузить изображение', required=False)
 
+
+"""Форма добавления комментария"""
+
+
+class CommentForm(ModelForm):
+    comment_text = forms.CharField(widget=CKEditorWidget(config_name='comments'), label='Текст комментария')
+
+    class Meta:
+        model = Comments
+        fields = ['comment_text']
