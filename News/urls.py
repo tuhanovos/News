@@ -13,12 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include, re_path
 
-from django.conf import settings
-from blog.views import index, register_user, login_user, logout_user
+from blog.views import index, register_user, logout_user, login_user, MyLoginForm
 
 admin.autodiscover()
 
@@ -26,11 +26,11 @@ urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('', index, name='index'),
                   path('registration/', register_user, name='registration'),
-                  path('login/', login_user, name='login'),
                   path('logout/', logout_user, name='logout'),
                   path('blog/', include(('blog.urls', 'blog'), namespace='blog')),
                   path('ckeditor/', include('ckeditor_uploader.urls')),
-                  re_path(r'^api-auth/', include('rest_framework.urls')),
+                  path('accounts/login/', MyLoginForm.as_view(), name='account_login'),
+                  re_path(r'^accounts/', include('allauth.urls')),
                   re_path(r'^comments/', include('django_comments.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

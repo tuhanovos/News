@@ -1,11 +1,12 @@
-from django.contrib.auth import login, logout
+from allauth.account.forms import LoginForm
+from allauth.account.views import LoginView
+from django.contrib.auth import login, logout, authenticate
 from django.core.files.uploadhandler import FileUploadHandler
 from django.db.models import F
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.utils.datastructures import MultiValueDictKeyError
 
-from News.EmailAuthBackend import EmailAuthBackend
 from blog.models import Article, CategoriesArticles, Comments
 from .forms import RegisterFormView, ProfileForm, LoginFormView
 
@@ -44,24 +45,27 @@ def register_user(request):
 """
 
 
+class MyLoginForm(LoginView):
+    template_name = 'login.html'
+
+
 def login_user(request):
     if request.user.is_authenticated:
         return redirect('/')
     else:
         if request.method == 'POST':
-            form = LoginFormView(data=request.POST)
+            form = LoginForm(data=request.POST)
             if form.is_valid():
                 email = form.cleaned_data.get('email')
                 my_pass = form.cleaned_data.get('password')
-                user = EmailAuthBackend.authenticate(email=email, password=my_pass)
-                if user is None:
-                    return HttpResponse('<h1>Пользователь с таким именем существует</h1>')
-                else:
+                user = authenticate(email=email, password=my_pass)
+                print(form)
+                if user:
                     login(request, user)
                     return redirect('index')
         else:
             form = LoginFormView()
-        return render(request, 'login.html', {'form': form})
+        return render(request, 'login.html', {'login_form': form})
 
 
 """Выход из профиля"""

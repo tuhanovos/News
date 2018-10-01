@@ -42,8 +42,15 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'dbbackup',
-    'rest_framework',
+    # 'rest_framework',
     'crispy_forms',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.vk',
+    'allauth.socialaccount.providers.twitter',
+    'allauth.socialaccount.providers.odnoklassniki',
+    # 'allauth.socialaccount.providers.facebook',
     ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -62,15 +69,24 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'News.urls'
 
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 60
+LOGIN_REDIRECT_URL = "/"
 
 AUTHENTICATION_BACKENDS = [
-    'News.EmailAuthBackend.EmailAuthBackend',
+    # 'News.EmailAuthBackend.EmailAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader'
+    'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.eggs.Loader',
 )
 
 TEMPLATES = [
@@ -118,13 +134,13 @@ DBBACKUP_CONNECTORS = {
     }
 }
 
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
-}
+# REST_FRAMEWORK = {
+#     # Use Django's standard `django.contrib.auth` permissions,
+#     # or allow read-only access for unauthenticated users.
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#     ]
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
