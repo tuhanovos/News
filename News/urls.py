@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include, re_path
 
-from blog.views import index, register_user, logout_user, MyLoginForm
+from blog.views import index, register_user, logout_user, MyLoginForm, add_comment
 
 admin.autodiscover()
 
@@ -31,7 +31,8 @@ urlpatterns = [
                   path('ckeditor/', include('ckeditor_uploader.urls')),
                   path('accounts/login/', MyLoginForm.as_view(), name='account_login'),
                   re_path(r'^accounts/', include('allauth.urls')),
-                  re_path(r'^comments/', include('django_comments.urls')),
+                  # path('blog/post/<int: article_id>/add_comment/<int: article_id>', add_comment, name='add_comment'),
+                  # re_path(r'^comments/', include('django_comments.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

@@ -17,14 +17,26 @@
     </div>
     </div>
     </div>
-<div>
-    <h4>Комментарии:</h4>
+<div class="card">
+    <h4 class="card-header">Комментарии:</h4>
+<div class="card-body">
 {% for comment in comments %}
-    <p>{{ comment.comment_text }}</p>
+    <p>{% autoescape off %}{{ comment.comment_text }}{% endautoescape %}</p>
 {% endfor %}
 
+{% if user.is_authenticated %}
+    <form method="POST" action="{% url "blog:add_comment" post.id %}">
+    {{ form.media }}
+    {% csrf_token %}
+    <div class="text-center">
 {% bootstrap_form form_comments %}
-
+    <div class="card-footer text-right">
+    {% bootstrap_button "Отправить" button_type="submit" button_class="btn_primary" %}
+    </div>
+    </div>
+    </form>
+{% endif %}
+</div>
 </div>
 </div>
 {% endblock content %}

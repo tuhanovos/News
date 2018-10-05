@@ -1,12 +1,9 @@
 from ckeditor.widgets import CKEditorWidget
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django import forms
-from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-from django.views.generic import FormView
-from django_comments.forms import CommentDetailsForm
 
 from blog.models import CategoriesArticles, Comments
 
@@ -70,7 +67,7 @@ class ProfileForm(forms.Form):
 
 
 class CommentForm(ModelForm):
-    comment_text = forms.CharField(widget=CKEditorWidget(config_name='comments'), label='Текст комментария')
+    comment_text = forms.CharField(widget=CKEditorWidget(config_name='comments'), label='', required=True)
 
     class Meta:
         model = Comments

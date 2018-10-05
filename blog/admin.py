@@ -5,6 +5,8 @@ from blog.models import CategoriesArticles, Article, Comments
 
 
 class ArticleInline(admin.StackedInline):
+    verbose_name = 'Комментарий'
+    verbose_name_plural = 'Комментарии'
     model = Comments
     extra = 2
 

@@ -119,8 +119,6 @@ def user_add_news(request):
 
 def view_one_post(request, article_id):
     comments = Comments.objects.filter(comment_article=article_id)
-    for comment in comments:
-        print(comment.comment_text)
     post = Article.objects.get(pk=article_id)
     Article.objects.filter(id=article_id).update(score=F('score') + 1)
     form_comments = CommentForm
@@ -141,6 +139,8 @@ def add_comment(request, article_id):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.comments_article = Article.objects.get(id=article_id)
+            comment.comment_article = Article.objects.get(id=article_id)
             form.save()
+        return HttpResponseRedirect(f'/blog/post/{article_id}/')
+    else:
         return HttpResponseRedirect(f'/blog/post/{article_id}/')
